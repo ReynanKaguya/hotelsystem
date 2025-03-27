@@ -1,0 +1,46 @@
+@model HotelManagementSystem.Models.ViewModels.LoginViewModel
+
+<h2 class="text-center my-4 text-primary">🔐 Secure Admin / Front Desk Login</h2>
+
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="card shadow-lg p-4" style="max-width: 400px; width: 100%; border-radius: 10px;">
+        <div class="card-body">
+            <h4 class="text-center mb-3">Welcome Back!</h4>
+            <form asp-action="Login" method="post">
+                <div class="mb-3">
+                    <label class="form-label fw-bold">📧 Email</label>
+                    <input asp-for="Email" class="form-control" placeholder="Enter email" required />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-bold">🔒 Password</label>
+                    <input asp-for="Password" type="password" class="form-control" placeholder="Enter password" required />
+                </div>
+                <div class="mb-3 form-check">
+                    <input asp-for="RememberMe" type="checkbox" class="form-check-input" />
+                    <label class="form-check-label">Remember Me</label>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">🔓 Login</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+    body {
+        background: linear-gradient(to right, #f8f9fa, #e9ecef);
+    }
+    .card {
+        transition: all 0.3s ease-in-out;
+    }
+    .card:hover {
+        transform: translateY(-5px);
+    }
+    .btn-primary {
+        background-color: #007bff;
+        border: none;
+        font-weight: bold;
+    }
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+</style>

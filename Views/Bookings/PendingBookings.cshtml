@@ -1,0 +1,85 @@
+@model IEnumerable<HotelManagementSystem.Models.Booking>
+
+<h2 class="text-center my-4 text-primary">📋 Pending Bookings</h2>
+
+<div class="container">
+    <div class="card shadow-lg p-4">
+        <div class="table-responsive">
+            <table class="table table-hover text-center align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Guest Name</th>
+                        <th>Room</th>
+                        <th>Check-in</th>
+                        <th>Check-out</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var booking in Model)
+                    {
+                        <tr>
+                            <td>@booking.GuestName</td>
+                            <td><span class="badge bg-primary">@booking.Room?.Name</span></td>
+                            <td>@booking.CheckinDate.ToString("MMM dd, yyyy")</td>
+                            <td>@booking.CheckoutDate.ToString("MMM dd, yyyy")</td>
+                            <td>
+                                @if(booking.Status == "Pending")
+                                {
+                                    <span class="badge bg-warning text-dark">Pending</span>
+                                }
+                                else if(booking.Status == "Checked-in")
+                                {
+                                    <span class="badge bg-success">Checked-in</span>
+                                }
+                                else if(booking.Status == "Checked-out")
+                                {
+                                    <span class="badge bg-secondary">Checked-out</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-info">@booking.Status</span>
+                                }
+                            </td>
+                            <td>
+                                @if (!booking.IsCheckedIn)
+                                {
+                                    <a href="@Url.Action("CheckIn", "Bookings", new { id = booking.Id })" class="btn btn-success btn-sm">🏨 Check-in</a>
+                                }
+                                else if (!booking.IsCheckedOut)
+                                {
+                                    <a href="@Url.Action("CheckOut", "Bookings", new { id = booking.Id })" class="btn btn-warning btn-sm">🚪 Check-out</a>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary">Completed</span>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<style>
+    body {
+        background: linear-gradient(to right, #f8f9fa, #e9ecef);
+    }
+    .card {
+        border-radius: 10px;
+        transition: all 0.3s ease-in-out;
+    }
+    .card:hover {
+        transform: translateY(-5px);
+    }
+    .btn-sm {
+        padding: 6px 12px;
+        font-size: 0.875rem;
+    }
+    .table th, .table td {
+        vertical-align: middle;
+    }
+</style>

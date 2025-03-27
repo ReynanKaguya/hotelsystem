@@ -1,0 +1,70 @@
+@model HotelManagementSystem.Models.ViewModels.BookingViewModel
+
+
+@{
+    ViewData["Title"] = "Confirm Your Booking";
+}
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Confirm Your Booking</h2>
+
+    <div class="row">
+        <!-- ✅ Room Details (Image + Info) -->
+        <div class="col-md-5">
+            <div class="card shadow-sm">
+                <img src="@Model.RoomImage" class="card-img-top" alt="Room Image">
+                <div class="card-body">
+                    <h4 class="card-title">@Model.RoomName</h4>
+                    <p class="card-text"><strong>Price:</strong> $@Model.RoomPrice per night</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ✅ Booking Form -->
+        <div class="col-md-7">
+            <form asp-action="Book" method="post" class="p-4 shadow-sm bg-white rounded">
+                <input type="hidden" asp-for="RoomId" />
+
+                <div class="mb-3">
+                    <input asp-for="GuestName" class="form-control" placeholder="Full Name" required />
+                </div>
+
+                <div class="mb-3">
+                    <input asp-for="GuestEmail" class="form-control" placeholder="Email Address" required />
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label>Check-in Date</label>
+                        <input asp-for="CheckinDate" class="form-control" type="date" required />
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label>Check-out Date</label>
+                        <input asp-for="CheckoutDate" class="form-control" type="date" required />
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <select asp-for="PaymentMethod" class="form-control">
+                        <option>Credit Card</option>
+                        <option>PayPal</option>
+                        <option>Bank Transfer</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100">Confirm Booking</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- ✅ Apply Some Extra Styling -->
+<style>
+    .card-img-top {
+        height: 250px;
+        object-fit: cover;
+    }
+    .shadow-sm {
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    }
+</style>

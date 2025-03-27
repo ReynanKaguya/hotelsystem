@@ -1,8 +1,101 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model IEnumerable<Room> // ✅ Ensure the View expects a list of rooms
+
+@{
+    ViewData["Title"] = "Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<style>
+    .hero {
+        background: url('/img/hotel-bj.jpg') no-repeat center center;
+        background-size: cover;
+        height: 80vh;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+    .hero h1 {
+        font-size: 2.5rem;
+        font-weight: bold;
+    }
+    .search-box {
+        background: rgba(255, 255, 255, 0.8);
+        padding: 20px;
+        border-radius: 10px;
+        margin-top: 20px;
+    }
+</style>
+
+<!-- Hero Section -->
+<div class="hero">
+    <div class="container">
+        <h1>Book Your Stay Instantly</h1>
+        <p>Enjoy luxury and comfort at our exclusive hotel</p>
+
+        <div class="search-box">
+            <form method="get" asp-action="SearchRooms" asp-controller="Rooms">
+            @Html.AntiForgeryToken()
+                <div class="row">
+                    <div class="col-md-3">
+                        <label>Check-In Date</label>
+                        <input type="date" class="form-control" name="checkin" required>
+                    </div>
+                    <div class="col-md-3">
+                        <label>Check-Out Date</label>
+                        <input type="date" class="form-control" name="checkout" required>
+                    </div>
+                    <div class="col-md-2">
+                        <label>Adults</label>
+                        <select class="form-control" name="adults">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label>Children</label>
+                        <select class="form-control" name="children">
+                            <option>0</option>
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2 d-flex align-items-end">
+                        <button type="submit" class="btn btn-primary w-100">Search</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Room Display Section -->
+<div class="container mt-5">
+    <h2 class="text-center">Available Rooms</h2>
+    @if (Model != null && Model.Any()) 
+    {
+        <div class="row">
+            @foreach (var room in Model)
+            {
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <img src="/img/room.jpg" class="card-img-top" alt="Room">
+                        <div class="card-body">
+                            <h5 class="card-title">@room.RoomType - @room.RoomNumber</h5>
+                            <p class="card-text">$@room.PricePerNight per night</p>
+                            <p>Status: <strong>@room.Status</strong></p>
+                            <a href="/Bookings/Create?roomId=@room.Id" class="btn btn-success">Book Now</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <p class="text-center text-muted">No rooms available.</p>
+    }
 </div>

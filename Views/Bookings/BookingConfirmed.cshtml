@@ -1,0 +1,59 @@
+@model HotelManagementSystem.Models.Booking
+
+<h2 class="text-success text-center my-4">🎉 Booking Submitted!</h2>
+
+<div class="container d-flex justify-content-center">
+    <div class="card shadow-lg p-4" style="max-width: 600px;">
+        <div class="card-body">
+            <h4 class="text-center">Thank you, <strong>@Model.GuestName</strong>!</h4>
+            <p class="text-center">Your booking is currently <span class="badge bg-warning text-dark">Pending Approval</span>. You will receive a confirmation once it is approved.</p>
+            <hr>
+            <div class="mb-3">
+                <p><strong>🏨 Room:</strong> <span class="badge bg-primary">@Model.Room?.Name</span></p>
+                <p><strong>📅 Check-in Date:</strong> @Model.CheckinDate.ToString("MMMM dd, yyyy")</p>
+                <p><strong>📆 Check-out Date:</strong> @Model.CheckoutDate.ToString("MMMM dd, yyyy")</p>
+                <p><strong>💰 Total Price:</strong> <span class="text-success fw-bold">$@Model.TotalPrice</span></p>
+                <p><strong>🔹 Status:</strong> <span class="badge bg-warning text-dark">Pending</span></p>
+            </div>
+            <hr>
+            <div class="d-flex justify-content-between">
+            
+                <a href="@Url.Action("DownloadInvoice", "Bookings", new { id = Model.Id })" class="btn btn-primary">
+                    📄 Download Invoice
+                </a>
+                <a href="/" class="btn btn-outline-dark">
+                    🏠 Return to Home
+                </a>
+                <div class="d-flex justify-content-center mt-4">
+                    <a class="btn btn-info" href="@Url.Action("GiveFeedback", "Bookings", new { bookingId = Model.Id })">
+                        Give Feedback
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    body {
+        background: linear-gradient(to right, #ece9e6, #ffffff);
+    }
+    .card {
+        border-radius: 15px;
+        transition: transform 0.2s;
+    }
+    .card:hover {
+        transform: scale(1.02);
+    }
+    .btn-primary {
+        background-color: #007bff;
+        border: none;
+    }
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+    .btn-outline-dark:hover {
+        background-color: #333;
+        color: white;
+    }
+</style>
